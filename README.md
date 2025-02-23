@@ -102,19 +102,27 @@ ORDER BY event_date;
 
 ## 🔍 Overall Insights & Business Impact
 ### **Key Findings**
-1. **Major Drop-Offs in the Upper Funnel**
+1. **Significant Funnel Drop-Off at the Initial Stage**
+   - 33,723 users (approximately 98%) who interacted with the wallet feature did not proceed to explore gift-related options.
+   - **Implication**: Users experience significant friction or lack incentives right after wallet interaction, causing substantial initial abandonment.
+
+2. **Platform-Based Conversion Discrepancy**
+   - Android users show higher initial interaction levels with wallet features but exhibit noticeably lower gift-conversion rates compared to iOS users.
+   - **Implication**: Indicates potential platform-specific UI/UX issues or differences in the user journey, suggesting targeted optimization opportunities specifically for the Android platform.
+
+3. **Major Drop-Offs in the Upper Funnel**
    - 98% of users interact with the wallet but do not explore gift features.
    - Possible causes: Lack of awareness, unclear navigation, or no incentive to proceed.
 
-2. **Friction in the Middle Funnel**
+4. **Friction in the Middle Funnel**
    - Users start the gift process but do not finalize purchases.
    - Potential reasons: Complicated flow, unclear value proposition, or difficult payment process.
 
-3. **Android vs. iOS Disparities**
+5. **Android vs. iOS Disparities**
    - Android users have higher engagement but lower conversion rates.
    - Possible solutions: Optimize the Android UI/UX or provide tailored incentives.
 
-4. **Seasonal Trends Affect Gift Purchases**
+6. **Seasonal Trends Affect Gift Purchases**
    - Gift transactions increase slightly during holidays.
    - **Business Opportunity**: Leverage seasonal campaigns and special offers.
 
