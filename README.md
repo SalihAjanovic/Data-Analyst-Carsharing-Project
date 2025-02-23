@@ -1,7 +1,7 @@
-# 🚗 Miles Carsharing Data Analysis
+# 🚗 Carsharing Data Analysis
 
 ## 🛠️ Project Overview
-This project focuses on analyzing **Miles Carsharing data** to understand **user behavior, conversion drop-offs, and optimization opportunities** in the app's **gift feature funnel**.
+This project focuses on analyzing **carsharing data** to understand **user behavior, conversion drop-offs, and optimization opportunities** in the app's **gift feature funnel**.
 
 The main objective is to identify **bottlenecks in user engagement**, determine **drop-off points**, and provide **data-driven recommendations** for improving conversion rates.
 
@@ -10,14 +10,13 @@ The main objective is to identify **bottlenecks in user engagement**, determine 
 ---
 
 ## 🔗 Resources & Links
-- **Google Colab Notebook**: *(If applicable, add a link here)*
-- **Dataset Source**: *(Specify if from Kaggle, company data, etc.)*
-- **GitHub Repository**: *(Your GitHub link here)*
+- **Data Analysis Spreadsheet**: [Google Sheets Analysis](https://docs.google.com/spreadsheets/d/1kPZxDZUGiDiQgoO3KhurtColzXymR7yPoahz9vECokg/edit?usp=sharing)
+- **Dataset Source**: *job application*
 
 ---
 
 ## 🎯 Project Goals
-- **Analyze user behavior** in the Miles app's **gift feature funnel**.
+- **Analyze user behavior** in the carsharing app's **gift feature funnel**.
 - **Identify major drop-off points** and analyze why users abandon the gift feature.
 - **Optimize conversion rates** by providing actionable recommendations.
 - **Compare engagement trends** across different platforms (iOS vs. Android).
@@ -25,7 +24,7 @@ The main objective is to identify **bottlenecks in user engagement**, determine 
 ---
 
 ## 🗂️ Dataset Description
-The dataset consists of event logs capturing user interactions within the Miles Carsharing app. The **gift feature funnel** is divided into three main stages:
+The dataset consists of event logs capturing user interactions within the carsharing app. The **gift feature funnel** is divided into three main stages:
 
 - **Upper Funnel:** Users interacting with the wallet but not proceeding further.
 - **Middle Funnel:** Users selecting a gift credit but not completing the purchase.
@@ -48,17 +47,17 @@ The dataset consists of event logs capturing user interactions within the Miles 
 ```sql
 WITH gift_funnel AS ( 
     SELECT DISTINCT user_id, 'upper' AS funnel_stage 
-    FROM `karuns-miles-project.miles.karun_miles` 
+    FROM `carsharing_data.events` 
     WHERE event_name IN ('menu_wallet', 'wallet_gift', 'wallet_topup_quick')
     UNION ALL 
     SELECT DISTINCT user_id, 'middle' AS funnel_stage 
-    FROM `karuns-miles-project.miles.karun_miles` 
+    FROM `carsharing_data.events` 
     WHERE event_name IN ('gift_item_click_giftcredit_5', 'gift_item_click_giftcredit_10',  
                          'gift_item_click_giftcredit_50', 'gift_item_click_giftcredit_100',  
                          'confirm_gif', 'go_gif')
     UNION ALL 
     SELECT DISTINCT user_id, 'lower' AS funnel_stage 
-    FROM `karuns-miles-project.miles.karun_miles` 
+    FROM `carsharing_data.events` 
     WHERE event_name IN ('gif_send', 'gif_copy', 'cancel_gif', 'cancel_go_gif') 
 ) 
 SELECT 
@@ -78,7 +77,7 @@ SELECT platform,
        COUNT(DISTINCT user_id) AS total_users, 
        COUNT(DISTINCT CASE WHEN event_name = 'gif_send' THEN user_id END) AS completed_gift_users, 
        COUNT(DISTINCT CASE WHEN event_name = 'gif_send' THEN user_id END) / COUNT(DISTINCT user_id) * 100 AS conversion_rate
-FROM `karuns-miles-project.miles.karun_miles` 
+FROM `carsharing_data.events` 
 GROUP BY platform;
 ```
 **Summary:**
@@ -90,7 +89,7 @@ GROUP BY platform;
 SELECT event_date, 
        event_name, 
        COUNT(DISTINCT user_id) AS user_count 
-FROM `karuns-miles-project.miles.karun_miles` 
+FROM `carsharing_data.events` 
 GROUP BY event_date, event_name 
 ORDER BY event_date;
 ```
@@ -102,19 +101,27 @@ ORDER BY event_date;
 
 ## 🔍 Overall Insights & Business Impact
 ### **Key Findings**
-1. **Major Drop-Offs in the Upper Funnel**
+1. **Significant Funnel Drop-Off at the Initial Stage**
+   - 33,723 users (approximately 98%) who interacted with the wallet feature did not proceed to explore gift-related options.
+   - **Implication**: Users experience significant friction or lack incentives right after wallet interaction, causing substantial initial abandonment.
+
+2. **Platform-Based Conversion Discrepancy**
+   - Android users show higher initial interaction levels with wallet features but exhibit noticeably lower gift-conversion rates compared to iOS users.
+   - **Implication**: Indicates potential platform-specific UI/UX issues or differences in the user journey, suggesting targeted optimization opportunities specifically for the Android platform.
+
+3. **Major Drop-Offs in the Upper Funnel**
    - 98% of users interact with the wallet but do not explore gift features.
    - Possible causes: Lack of awareness, unclear navigation, or no incentive to proceed.
 
-2. **Friction in the Middle Funnel**
+4. **Friction in the Middle Funnel**
    - Users start the gift process but do not finalize purchases.
    - Potential reasons: Complicated flow, unclear value proposition, or difficult payment process.
 
-3. **Android vs. iOS Disparities**
+5. **Android vs. iOS Disparities**
    - Android users have higher engagement but lower conversion rates.
    - Possible solutions: Optimize the Android UI/UX or provide tailored incentives.
 
-4. **Seasonal Trends Affect Gift Purchases**
+6. **Seasonal Trends Affect Gift Purchases**
    - Gift transactions increase slightly during holidays.
    - **Business Opportunity**: Leverage seasonal campaigns and special offers.
 
